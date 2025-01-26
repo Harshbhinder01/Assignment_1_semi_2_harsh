@@ -74,7 +74,7 @@ class Client:
 
     def __str__(self) ->str :
         """this shows a string of the client"""
-        return f"{self.last_name},{self.first_name}, [{self.client_number}], {self.email_address}]"
+        return f"{self.__last_name},{self.__first_name}, [{self.__client_number}], {self.__email_address}]"
     
     
             
