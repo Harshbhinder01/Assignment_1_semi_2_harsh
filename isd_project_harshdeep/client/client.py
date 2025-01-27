@@ -1,6 +1,5 @@
 from email_validator import validate_email, EmailNotValidError
-
-
+ 
 class Client:
     """
     this is the Client class 
@@ -30,7 +29,7 @@ class Client:
         if len(first_name.strip()) == 0:
             self.__first_name = first_name
         else:
-            raise ValueError("The first name cannot be blank")
+            raise ValueError("The first name cannot be blank.")
 
         #if the last name is blank raise a ValueError
         if len(last_name.strip()) == 0:
@@ -42,7 +41,7 @@ class Client:
             valid_email = validate_email(email_address)
             self.__email_address = valid_email.email
         except EmailNotValidError:
-            self.__email_address = "email@pixell-river.com"    
+            self.__email_address = "harshbhinder@pixel.com"    
 
     @property
     def client_number(self) -> int:
@@ -74,7 +73,7 @@ class Client:
 
     def __str__(self) ->str :
         """this shows a string of the client"""
-        return f"{self.__last_name},{self.__first_name}, [{self.__client_number}], {self.__email_address}]"
+        return f"{self.__last_name},{self.__first_name}, [{self.__client_number}], {self.__email_address}"
     
     
             
