@@ -1,15 +1,20 @@
+from datetime import date
+
 class BankAccount:
-    def __init__(self, account_number: int, client_number: int, balance: float):
+    BASE_SERVICE_CHARGE: float = 0.50 # this is a constant for the base service charge that is a float.
+    def __init__(self, account_number: int, client_number: int, balance: float, date_created: date ): #i wash here last and i need to do get service charges next but check agian what u did
         """
         args:
         account_number: An integer value representing the bank account number
         client_number: An integer value representing the client number representing the account holder
         balance: A float value representing the current balance.
+        date_created: the date the account was created.
 
         ValueErrors:
         account_number: if the value is not int raise a ValueError.
         client_number: if the value is not a int raise a ValueError.
         balance: if the value is not a float raise a ValueError.
+        date_created: if the date created is not vald it will default to todays date
         """
         #if the value is not int raise a ValueError.
         if isinstance(account_number, int):
@@ -28,6 +33,12 @@ class BankAccount:
             self.__balance = float(balance)
         except ValueError:
             self.__balance = 0
+        
+        # if the date_created is not valid default to todays date
+        if isinstance(date_created, date):
+            self.__date_created = date_created 
+        else:
+            self.__date_created = date.today()
 
     @property
     def account_number(self) -> int:
@@ -50,7 +61,14 @@ class BankAccount:
         """
         return self.__balance
     
-    def updated_balance(self, amount:float):
+    @property
+    def date_created(self) -> date:
+        """
+        this returns the date
+        """
+        return self.__date_created
+    
+    def update_balance(self, amount:float):
         """
         this updates the balance if the balance is invalid it will raise a valueerror
         """
@@ -67,7 +85,7 @@ class BankAccount:
             format_amount = f"{amount:,.2f}"
             raise ValueError(f"deposit amount:{format_amount} must be a positive")
         
-        self.updated_balance(amount)
+        self.update_balance(amount)
 
     def withdraw(self, amount):
         if not isinstance(amount, (int,float)):
@@ -83,6 +101,11 @@ class BankAccount:
             raise ValueError(f"withdraw amount: {format_amount} cannot exceed the account balance: {format_balance}")
         
         self.updated_balance(amount)
+
+    def get_service_charges(self) -> float:
+        """ this will return the service charge"""
+        return self.BASE_SERVICE_CHARGE
+
             
     
         
