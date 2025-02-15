@@ -2,7 +2,7 @@ from datetime import date
 
 class BankAccount:
     BASE_SERVICE_CHARGE: float = 0.50 # this is a constant for the base service charge that is a float.
-    def __init__(self, account_number: int, client_number: int, balance: float, date_created: date ): #i wash here last and i need to do get service charges next but check agian what u did
+    def __init__(self, account_number: int, client_number: int, balance: float, date_created: date ): 
         """
         args:
         account_number: An integer value representing the bank account number
