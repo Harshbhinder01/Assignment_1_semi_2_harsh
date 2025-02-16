@@ -1,8 +1,8 @@
-from bank_account.chequing_account import ChequingAccount
 import unittest
+from bank_account.chequing_account import ChequingAccount
 from datetime import date
 
-class testchequingaccount(unittest.Testcase):
+class testchequingaccount(unittest.TestCase):
     def setUp(self):
         """
         attributes are set to input values
@@ -32,21 +32,36 @@ class testchequingaccount(unittest.Testcase):
         """
         this test when balance is greater than overdraft limit
         """
+        self.assertEqual(round(self.chequing.get_service_charges(), 2), 0.50)
 
 
     def test_get_service_charges_less(self):
         """
         this test balance less than overdraft limit
         """
+        self.chequing = ChequingAccount(1020, 12, 50.00, date(2025, 2, 15), -100.00, 0.05)
+        charge = 0.50 + (-100.00- -300.00) * 0.05 
+        self.assertEqual(round(self.chequing.get_service_charges(),2), 2.2)
+
+
 
 
     def test_get_service_charges_equal(self):
         """
         this is to test balance equal to overdraft limit
         """
+        self.chequing = ChequingAccount(1020, 12, 50.00, date(2025, 2, 15), -100.00, 0.05)
+        self.assertEqual(round(self.chequing.get_service_charges(),2), 0.50)
+
 
 
     def test_str_method(self):
         """
         this is to test appropriate value returned based on attribute values.
         """
+        str_expected = (
+            "Account Number: 1020 Balance: $100.00/n"
+            "Overdraft Limit: $-100.00 overdraft rate: 5.00% Account Type: chequing"
+
+        )
+        self.assertEqual(str(self.chequing), str_expected)

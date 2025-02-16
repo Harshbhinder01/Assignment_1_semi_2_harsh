@@ -43,7 +43,7 @@ class ChequingAccount(BankAccount):
         
     def __str__(self) -> str:
         """
-        this is the for matted str.
+        this is the formatted str.
         """
         return (super().__str__() +
                 f"\nOverdraft Limit: ${self.__overdraft_limit:,.2f}" +
