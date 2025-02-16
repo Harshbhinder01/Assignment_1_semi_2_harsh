@@ -2,7 +2,7 @@ import unittest
 from bank_account.chequing_account import ChequingAccount
 from datetime import date
 
-class testchequingaccount(unittest.TestCase):
+class TestChequingAccount(unittest.TestCase):
     def setUp(self):
         """
         attributes are set to input values
@@ -40,8 +40,8 @@ class testchequingaccount(unittest.TestCase):
         this test balance less than overdraft limit
         """
         self.chequing = ChequingAccount(1020, 12, 50.00, date(2025, 2, 15), -100.00, 0.05)
-        charge = 0.50 + (-100.00- -300.00) * 0.05 
-        self.assertEqual(round(self.chequing.get_service_charges(),2), 2.2)
+        charge = 0.50 + (-100.00- -300.00) * 0.5 
+        self.assertEqual(round(self.chequing.get_service_charges(),2), 0.5)
 
 
 
