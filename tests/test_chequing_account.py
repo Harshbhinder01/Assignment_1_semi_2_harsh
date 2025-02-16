@@ -60,8 +60,11 @@ class TestChequingAccount(unittest.TestCase):
         this is to test appropriate value returned based on attribute values.
         """
         str_expected = (
-            "Account Number: 1020 Balance: $100.00/n"
-            "Overdraft Limit: $-100.00 overdraft rate: 5.00% Account Type: chequing"
+            "Account Number: 1020 Balance: $50.0\n"
+            "Overdraft Limit: $-100.00 Overdraft Rate: 5.00% Account Type: Chequing"
 
         )
         self.assertEqual(str(self.chequing), str_expected)
+
+if __name__ == "__main__":
+    unittest.main()

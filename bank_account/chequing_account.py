@@ -45,11 +45,11 @@ class ChequingAccount(BankAccount):
         """
         this is the formatted str.
         """
-        return (super().__str__() +
-                f"\nOverdraft Limit: ${self.__overdraft_limit:,.2f}" +
-                f"\nOverdraft Rate: {self.__overdraft_rate * 100:.2f}" +
-                "\nAccount Type: Chequing")
-        
+        main_str = super().__str__()
+        return (f"{main_str}\n"
+                f"Overdraft Limit: ${self.__overdraft_limit:.2f} "
+                f"Overdraft Rate: {self.__overdraft_rate * 100:.2f}% "
+                f"Account Type: Chequing")
     
 
 

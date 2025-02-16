@@ -102,6 +102,13 @@ class BankAccount:
         
         self.updated_balance(amount)
 
+    def __str__(self) -> str:
+        """
+        this is the formatted str.
+        """
+        formatted_balance = f"${self.__balance}"
+        return f"Account Number: {self.__account_number} Balance: {formatted_balance}"
+
     def get_service_charges(self) -> float:
         """ this will return the service charge"""
         return self.BASE_SERVICE_CHARGE

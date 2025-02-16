@@ -26,7 +26,7 @@ class InvestmentAccount(BankAccount):
         if the date created is more than 10 years ago, the service charge is equal to the base service charge.
         otherwise the service charge is equal to the base service charge + managment fee.
         """
-        if self.__date_created <= self.TEN_YEARS_AGO:
+        if self._BankAccount__date_created <= self.TEN_YEARS_AGO:
             return self.BASE_SERVICE_CHARGE
         return self.BASE_SERVICE_CHARGE + self.__managment_fee
     
@@ -34,13 +34,14 @@ class InvestmentAccount(BankAccount):
         """
         if the account is more than 10 years old the managment fee is waived
         """
-        if self.date_created < self.TEN_YEARS_AGO:
-            management_fee_str = "Waived"
+        
+        main_str = super().__str__()
+       
+        if self._BankAccount__date_created <= self.TEN_YEARS_AGO:
+            self.__management_fee = "Waived"
         else:
-            management_fee_str = f"${self.__managment_fee,:.2f}"
-
-        return (super().__str__() +
-                f"Management Fee: {management_fee_str}\n" +
-                "Account Type: Investment")
+            self.__management_fee =  f"${self.__management_fee:.2f}"
+       
+        return f"{main_str}\nManagement Fee: {self.__management_fee} Account Type: Investment"
 
     
