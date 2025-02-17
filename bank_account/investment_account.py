@@ -38,10 +38,10 @@ class InvestmentAccount(BankAccount):
         main_str = super().__str__()
        
         if self._BankAccount__date_created <= self.TEN_YEARS_AGO:
-            self.__management_fee = "Waived"
+            management_fee = "Waived"
         else:
-            self.__management_fee =  f"${self.__management_fee:.2f}"
+            management_fee =  f"${self.__managment_fee:.2f}"
        
-        return f"{main_str}\nManagement Fee: {self.__management_fee} Account Type: Investment"
+        return f"{main_str}\nManagement Fee: {management_fee} Account Type: Investment"
 
     

@@ -26,8 +26,7 @@ class SavingsAccount(BankAccount):
         this shows a string representation
         """
         return (super().__str__() +
-                f"\nMinimum Balance: ${self.__minimum_balance:,.2f}" +
-                "\nAccount Type: Savings")
+                f"\nMinimum Balance: ${self.__minimum_balance:,.2f} Account Type: Savings")
     
     def get_service_charges(self):
         """
