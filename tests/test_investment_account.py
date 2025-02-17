@@ -50,7 +50,7 @@ class TestInvestmentAccount(unittest.TestCase):
         10 years ago
         """
         self.investment = InvestmentAccount(1020, 12, 50.00, date(2025, 2, 15), 2.00)
-        expected = (f"Account Number: 2005 Balance: $120.0\n"
+        expected = (f"Account Number: 1020 Balance: $50.00\n"
                             f"Management Fee: Waived Account Type: Investment"
         )
 
@@ -60,8 +60,8 @@ class TestInvestmentAccount(unittest.TestCase):
         displays managment fee when date created was within last 10 years
         """
         self.investment = InvestmentAccount(1020, 12, 50.00, date(2025, 2, 15), 2.00)
-        expected = (f"Account Number: 2005 Balance: $120.0\n"
-            f"Management Fee: $3.00 Account Type: Investment")
+        expected = (f"Account Number: 1020 Balance: $50.00\n"
+            f"Management Fee: $2.00 Account Type: Investment")
         self.assertEqual(str(self.investment), expected)
 
 

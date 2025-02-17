@@ -100,7 +100,7 @@ class BankAccount:
             format_amount = f"{amount:,.2f}"
             raise ValueError(f"withdraw amount: {format_amount} cannot exceed the account balance: {format_balance}")
         
-        self.updated_balance(amount)
+        self.update_balance(amount)
 
     def __str__(self) -> str:
         """
