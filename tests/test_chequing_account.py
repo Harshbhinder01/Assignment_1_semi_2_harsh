@@ -35,7 +35,7 @@ class TestChequingAccount(unittest.TestCase):
         self.assertEqual(round(self.chequing.get_service_charges(), 2), 0.50)
 
 
-    def test_get_service_charges_less(self):
+    def test_get_service_charges_less(self):    
         """
         this test balance less than overdraft limit
         """

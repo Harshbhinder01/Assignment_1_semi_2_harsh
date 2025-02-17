@@ -53,6 +53,7 @@ class TestInvestmentAccount(unittest.TestCase):
         expected = (f"Account Number: 1020 Balance: $50.00\n"
                             f"Management Fee: Waived Account Type: Investment"
         )
+        self.assertEqual(str(self.investment), expected)
 
 
     def test_str_date_created_within_ten_years(self):
