@@ -22,7 +22,7 @@ class ManagementFeeStrategy(ServiceChargeStrategy):
         """
         If the account is older than 10 years the managment fee gets wavied
         """
-        if self.__date_created < self.TEN_YEARS_AGO:
+        if self.__date_created <= self.TEN_YEARS_AGO:
             return self.BASE_SERVICE_CHARGE
         else:
             return self.BASE_SERVICE_CHARGE + self.__management_fee 

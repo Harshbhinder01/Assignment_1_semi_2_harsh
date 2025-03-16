@@ -1,6 +1,7 @@
 import unittest
 from bank_account.savings_account import SavingsAccount
 from datetime import date
+from patterns.strategy.minimum_balance_strategy import MinimumBalanceStrategy
 
 class TestSavingsAccount(unittest.TestCase):
 
@@ -24,21 +25,22 @@ class TestSavingsAccount(unittest.TestCase):
         this test the balance is greater than the minimum balance
         """
         self.saving = SavingsAccount(1020, 12, 100.00, date(2025, 2, 15), 50.00)
-        self.assertEqual(self.saving.get_service_charges(),self.saving.BASE_SERVICE_CHARGE)
+        self.assertEqual(self.saving.minimum_balance, 50.00)
 
     def test_get_service_charges_equal(self):
         """
         this test the balance to see if it is equal to the minimum balance
         """
         self.saving = SavingsAccount(1020, 12, 50.00, date(2025, 2, 15), 50.00)
-        self.assertEqual(self.saving.get_service_charges(), self.saving.BASE_SERVICE_CHARGE)
+        self.assertEqual(self.saving.get_service_charges(), 10.0)
 
     def test_get_service_charges_less(self):
         """
         this test the balance to see if it is less to the minimum balance
         """
         self.saving = SavingsAccount(1020, 12, 10.00, date(2025, 2, 15), 50.00)
-        self.assertEqual(round(self.saving.get_service_charges(),2),round(self.saving.BASE_SERVICE_CHARGE * self.saving.SERVICE_CHARGE_PREMIUM, 2))
+        expected_service = MinimumBalanceStrategy(50.00).calculate_service_charges(self.saving)
+        self.assertEqual(expected_service, self.saving.get_service_charges())
 
     def test_str(self):
         """

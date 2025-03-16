@@ -37,4 +37,4 @@ class SavingsAccount(BankAccount):
         if the balance of the savings account is less than the minimum balance,
         then the service charge is calculated using using the formula.
         """
-        return self._strategy.calculate_service_charges()
+        return self._strategy.calculate_service_charges(self)

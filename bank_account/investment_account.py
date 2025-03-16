@@ -14,7 +14,7 @@ class InvestmentAccount(BankAccount):
         except ValueError:
             self.__managment_fee = 2.55
         
-        self._observer = ManagementFeeStrategy(date_created, date)
+        self._observer = ManagementFeeStrategy(date_created, management_fee)
 
     @property
     def managment_fee(self) -> float:
@@ -29,7 +29,7 @@ class InvestmentAccount(BankAccount):
         if the date created is more than 10 years ago, the service charge is equal to the base service charge.
         otherwise the service charge is equal to the base service charge + managment fee.
         """
-        return self._observer.calculate_service_charges()
+        return self._observer.calculate_service_charges(self)
     
     def __str__(self) -> str:
         """

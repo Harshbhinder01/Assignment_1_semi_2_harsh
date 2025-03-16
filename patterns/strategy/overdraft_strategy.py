@@ -14,8 +14,22 @@ class OverdraftStrategy(ServiceChargeStrategy):
         """
         this is to initialize the object overdraft strategy.
         """
-        self.__overdraft_limit = overdraft_limit
-        self.__overdraft_rate = overdraft_rate
+        self._overdraft_limit = overdraft_limit
+        self._overdraft_rate = overdraft_rate
+    
+    @property
+    def overdraft_limit(self) -> float:
+        """
+        this is the acessor for the overdraft limit
+        """
+        return self._overdraft_limit
+    
+    @property
+    def overdraft_rate(self) -> float:
+        """
+        this is the acessor for the overdraft rate
+        """
+        return self._overdraft_rate
 
     def calculate_service_charges(self, account: BankAccount) -> float:
         """
@@ -26,9 +40,8 @@ class OverdraftStrategy(ServiceChargeStrategy):
         then the service charge is calculated using the formula.
         """
         # this is the base service charge constant from the class service charge strategy
-        base_service_charge = self.BASE_SERVICE_CHARGE
 
-        if account.balance >= self.__overdraft_limit:
-            return base_service_charge
+        if account.balance >= self._overdraft_limit:
+            return self.BASE_SERVICE_CHARGE
         else:
-            return (base_service_charge + (self.__overdraft_limit - account.balance) * self.__overdraft_rate)
+            return self.BASE_SERVICE_CHARGE + (self._overdraft_limit - account.balance) * self._overdraft_rate

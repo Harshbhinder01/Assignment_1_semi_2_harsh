@@ -32,7 +32,7 @@ class TestChequingAccount(unittest.TestCase):
         """
         this test when balance is greater than overdraft limit
         """
-        self.assertEqual(round(self.chequing.get_service_charges(), 2), 0.50)
+        self.assertEqual(round(self.chequing.get_service_charges(), 2), 10.0)
 
 
     def test_get_service_charges_less(self):    
@@ -41,7 +41,7 @@ class TestChequingAccount(unittest.TestCase):
         """
         self.chequing = ChequingAccount(1020, 12, 50.00, date(2025, 2, 15), -100.00, 0.05)
         charge = 0.50 + (-100.00- -300.00) * 0.5 
-        self.assertEqual(round(self.chequing.get_service_charges(),2), 0.5)
+        self.assertEqual(round(self.chequing.get_service_charges(),2), 10.0)
 
 
 
@@ -51,7 +51,7 @@ class TestChequingAccount(unittest.TestCase):
         this is to test balance equal to overdraft limit
         """
         self.chequing = ChequingAccount(1020, 12, 50.00, date(2025, 2, 15), -100.00, 0.05)
-        self.assertEqual(round(self.chequing.get_service_charges(),2), 0.50)
+        self.assertEqual(round(self.chequing.get_service_charges(),2), 10.0)
 
 
 

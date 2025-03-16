@@ -36,7 +36,7 @@ class ChequingAccount(BankAccount):
         """
         this function will call the calculate service charge 
         """
-        return self._strategy.calculate_service_charges()
+        return self._strategy.calculate_service_charges(self)
         
     def __str__(self) -> str:
         """

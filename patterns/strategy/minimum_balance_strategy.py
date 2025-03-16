@@ -5,7 +5,7 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
     """
     this is a calss that represents the minimum balance strategy for bank accounts.
     """
-
+    SERVICE_CHARGE_PREMIUM: float = 2.0
     def __init__(self, minimum_balance: float):
         """
         Initialize the MinimumBalanceStrategy object.
@@ -14,7 +14,6 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
             minimum_balance (float): The minimum balance to be maintained in the account.
         """
         self.__minimum_balance = minimum_balance
-        self.SERVICE_CHARGE_PREMIUM: float = 2.0
 
     def calculate_service_charges(self, account: BankAccount) -> float:
         """
@@ -27,6 +26,6 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
 
         """
         if account.balance >= self.__minimum_balance:
-            return self.BASE_SERVICE_CHARGE
+            return ServiceChargeStrategy.BASE_SERVICE_CHARGE
         else:
-            return self.BASE_SERVICE_CHARGE * self.SERVICE_CHARGE_PREMIUM 
+            return ServiceChargeStrategy.BASE_SERVICE_CHARGE * self.SERVICE_CHARGE_PREMIUM 
