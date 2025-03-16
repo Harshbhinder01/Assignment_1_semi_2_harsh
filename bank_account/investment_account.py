@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from bank_account.bank_account import BankAccount
+from patterns.strategy.managment_fee_strategy import ManagementFeeStrategy
 
 class InvestmentAccount(BankAccount):
     TEN_YEARS_AGO = date.today() - timedelta(days = 10 * 365.25)
@@ -12,6 +13,8 @@ class InvestmentAccount(BankAccount):
             self.__managment_fee = float(management_fee)
         except ValueError:
             self.__managment_fee = 2.55
+        
+        self._observer = ManagementFeeStrategy(date_created, date)
 
     @property
     def managment_fee(self) -> float:
@@ -26,9 +29,7 @@ class InvestmentAccount(BankAccount):
         if the date created is more than 10 years ago, the service charge is equal to the base service charge.
         otherwise the service charge is equal to the base service charge + managment fee.
         """
-        if self._BankAccount__date_created <= self.TEN_YEARS_AGO:
-            return self.BASE_SERVICE_CHARGE
-        return self.BASE_SERVICE_CHARGE + self.__managment_fee
+        return self._observer.calculate_service_charges()
     
     def __str__(self) -> str:
         """

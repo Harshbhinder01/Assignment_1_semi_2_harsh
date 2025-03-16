@@ -25,11 +25,10 @@ class OverdraftStrategy(ServiceChargeStrategy):
         if the balance of the chequing account is less than the overdraft limit, 
         then the service charge is calculated using the formula.
         """
-        # this is the base service charge  from the class service charge strategy
+        # this is the base service charge constant from the class service charge strategy
         base_service_charge = self.BASE_SERVICE_CHARGE
 
         if account.balance >= self.__overdraft_limit:
             return base_service_charge
         else:
-            # Calculate charge based on overdraft
             return (base_service_charge + (self.__overdraft_limit - account.balance) * self.__overdraft_rate)
