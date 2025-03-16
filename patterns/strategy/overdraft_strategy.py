@@ -12,7 +12,7 @@ class OverdraftStrategy(ServiceChargeStrategy):
 
     def __init__(self, overdraft_limit: float, overdraft_rate: float):
         """
-        this is to initialize the object
+        this is to initialize the object overdraft strategy.
         """
         self.__overdraft_limit = overdraft_limit
         self.__overdraft_rate = overdraft_rate
