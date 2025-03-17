@@ -10,3 +10,8 @@ Assignment 1: [Indicate the name and description of the current assignment]
 Assignment 2: the name of this assignment is applying object-oriented design abstraction, inheritance and ploymorphism.
 This assignment will focus on content from the second module - that is Abstraction, Inheritance and Polymorphism.
 Assignment 3 : the name if this assignment is Design patterns. this assignment will focs on scalability and maintainability of code. 
+
+## strategy pattern:
+the startrgy pattern used to handle the service charge calculations.
+
+## observer pattern:
