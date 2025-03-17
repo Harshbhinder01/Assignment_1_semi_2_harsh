@@ -79,11 +79,13 @@ class BankAccount(Subject, ABC):
         """
         this updates the balance if the balance is invalid it will raise a valueerror
         """
-        try:
-            amount = float(amount)
-            self.__balance += amount
-        except ValueError:
-            print("this is a invalid amount")
+        if self.__balance < self.LOW_BALANCE_LEVEL:
+            self.notify(f"Low balance warning ${self.__balance:.2f}: on account {self.__account_number}.")
+           
+        if amount > self.LARGE_TRANSACTION_THRESHOLD:
+            self.notify(f"Large transaction ${amount:.2f}: on account {self.__account_number}.")
+
+        
         
     def deposit(self, amount):
         if not isinstance(amount, (int,float)):
