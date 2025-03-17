@@ -1,7 +1,15 @@
 from datetime import date
+from patterns.observer.subject import Subject
+from patterns.observer.observer import Observer
+from abc import ABC
 
-class BankAccount:
+class BankAccount(Subject, ABC):
+    LARGE_TRANSACTION_THRESHOLD : float = 9999.99
+    LOW_BALANCE_LEVEL : float = 50.0
     def __init__(self, account_number: int, client_number: int, balance: float, date_created: date ):
+
+        super().__init__()
+
         """
         args:
         account_number: An integer value representing the bank account number
@@ -111,6 +119,27 @@ class BankAccount:
     def get_service_charges(self) -> float:
         """ this will return the service charge"""
         return self.BASE_SERVICE_CHARGE
+    
+    def attach(self, observer: Observer) -> None:
+        """
+        this is the attach method
+        """
+        if observer in self._observers:
+            self._observers.append(observer)
+
+    def detach(self, observer: Observer) -> None:
+        """
+        this is the detach method
+        """
+        if observer in self._observers:
+            self._observers.remove(observer)
+    
+    def notify(self, message: str) -> None:
+        """
+        this is the notify method
+        """
+        for observer in self._observers:
+            observer.update(message)
 
             
     
