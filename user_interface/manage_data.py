@@ -49,94 +49,109 @@ accounts_csv_path = os.path.join(data_dir, 'accounts.csv')
 
 
 
-
 def load_data()->tuple[dict,dict]:
     """
-    Populates a client dictionary and an account dictionary with 
+    Populates a client dictionary and an account dictionary with
     corresponding data from files within the data directory.
     Returns:
         tuple containing client dictionary and account dictionary.
     """
     client_listing = {}
     accounts = {}
-
-    # READ CLIENT DATA 
+ 
+    # READ CLIENT DATA
     with open(clients_csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
+       
         for row in reader:
             try:
- 
                 client_number = int(row['client_number'])
                 first_name = row['first_name']
                 last_name = row['last_name']
                 email_address = row['email_address']
+               
+                if not first_name:
+                    raise ValueError("First name cannot be blank.")
+                client = Client(client_number, first_name, last_name, email_address)
+                client_listing[client_number] = client
+               
+            except Exception:
+                logging.error(f"root - ERROR - Unable to create client: First Name cannot be blank.")          
  
-                if not first_name or not last_name or not email_address:
-                    raise ValueError("First Name, Last Name, and Email cannot be blank.")
- 
-                client_listing[client_number] = Client(
-                    client_number, first_name, last_name, email_address)
-                
-            except Exception as exception:
-                logging.error(f"Unable to create client: {exception}")
-        
-
     # READ ACCOUNT DATA
+   
     with open(accounts_csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
+       
         for row in reader:
             try:
+                account_type = row['account_type']
                 account_number = int(row['account_number'])
                 client_number = int(row['client_number'])
                 balance = float(row['balance'])
-                date_created = datetime.strptime(row['date_created'], '%Y-%m-%d')
-                account_type = row['account_type']
- 
-                if account_type == "Chequingaccount":
-                    overdraft_limit = float (row['overdraft_limit'])
-                    overdraft_rate = float(row['overdraft_rate'])
-                    account = ChequingAccount(account_number, client_number, balance, date_created, overdraft_limit, overdraft_rate)
-
-                elif account_type == "Investmentaccount":
-                    management_Fee = float(row['management_fee'])
-                    account = InvestmentAccount(account_number, client_number, balance, date_created, management_Fee)
- 
-                elif account_type == "SavingsAccount":
-                    interest_rate = float(row['interest_rate'])
-                    account = SavingsAccount(account_number, client_number, balance, date_created, interest_rate)
- 
-                
- 
-                else:
-                    logging.error(f"Not a valid account type.: {account_type}")
-                    continue
+                date_created = datetime.strptime(row['date_created'])
+                """
+                this will extract the data from file into variables and
+                converting to data type.
+                """
                
+                if account_type == "ChequingAccount":
+                    overdraft_limit = float(row['overdraft_limit'])
+                    overdraft_rate = float(row['overdraft_rate'])
+                    account = ChequingAccount(account_number, client_number, balance, date_created, overdraft_limit, overdraft_rate)  
+                    """
+                    if the account type is chequingaccount it wiil use values according
+                    to the chequingaccount
+                    """
+                   
+                elif account_type == "InvestmentAccount":
+                    management_fee = float(row['management_fee'])
+                    account = InvestmentAccount(account_number, client_number, balance, date_created, management_fee)
+                    """
+                    if the account type is investmentaccount it wiil use values according
+                    to the investmentaccount
+                    """
+                   
+                elif account_type == "SavingsAccount":
+                    minimum_balance = float(row['minimum_balance'])
+                    account = SavingsAccount(account_number, client_number, balance, date_created, minimum_balance)
+                    """
+                    if the account type is savingaccount it wiil use values according
+                    to the savingaccount
+                    """
+                         
+                else:
+                    raise ValueError(f"Not a valid account type")
+                 
                 if client_number in client_listing:
                     accounts[account_number] = account
                 else:
-                    logging.error(f"Bank Account: {account_number} contains invalid client Number: {client_number}")
- 
+                    logging.error(f"Bank Account: {account_number} contains invalid Client Number: {client_number}")
+                """
+                if the client number exists in client listing it will
+                add the account to the accounts dictionary else it gonna raise the error.
+                """    
             except Exception as e:
-                logging.error(f"Unable to create bank account from row : {e}")
+                logging.error(f"Unable to create bank account {row}: {e}")          
+               
+               
     # RETURN STATEMENT
-    return client_listing, accounts 
-
-    
-
-
+        return client_listing, accounts
+ 
+ 
 def update_data(updated_account: BankAccount) -> None:
     """
-    A function to update the accounts.csv file with balance 
+    A function to update the accounts.csv file with balance
     data provided in the BankAccount argument.
     Args:
         updated_account (BankAccount): A bank account containing an updated balance.
     """
     updated_rows = []
-
+ 
     with open(accounts_csv_path, mode='r', newline='') as file:
         reader = csv.DictReader(file)
         fields = reader.fieldnames
-        
+       
         for row in reader:
             account_number = int(row['account_number'])
             # Check if the account number is in the dictionary
@@ -144,23 +159,24 @@ def update_data(updated_account: BankAccount) -> None:
                 # Update the balance column with the new balance from the dictionary
                 row['balance'] = updated_account.balance
             updated_rows.append(row)
-
+ 
     # Write the updated data back to the CSV
     with open(accounts_csv_path, mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=fields)
         writer.writeheader()
         writer.writerows(updated_rows)
-
-
+ 
+ 
 # GIVEN TESTING SECTION:
 if __name__ == "__main__":
     clients,accounts = load_data()
-
+   
+   
     print("=========================================")
     for client in clients.values():
-        print(client)
-        print(f"{client.client_number} Accounts\n=============")
-        for account in accounts.values():
-            if account.client_number == client.client_number:
-                print(f"{account}\n")
-        print("=========================================")
+            print(client)
+            print(f"Client {client.client_number} Accounts\n=============")
+            for account in accounts.values():
+                if account.client_number == client.client_number:
+                    print(f"{account}\n")
+            print("=========================================")
