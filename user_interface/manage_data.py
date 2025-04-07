@@ -75,17 +75,52 @@ def load_data()->tuple[dict,dict]:
                     raise ValueError("First Name, Last Name, and Email cannot be blank.")
  
                 client_listing[client_number] = Client(
-                    client_number, first_name, last_name, email_address
-                )
-            except Exception as e:
-                logging.error(f"Unable to create client: {e}")
+                    client_number, first_name, last_name, email_address)
+                
+            except Exception as exception:
+                logging.error(f"Unable to create client: {exception}")
         
 
     # READ ACCOUNT DATA
     with open(accounts_csv_path, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)  
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            try:
+                account_number = int(row['account_number'])
+                client_number = int(row['client_number'])
+                balance = float(row['balance'])
+                date_created = datetime.strptime(row['date_created'], '%Y-%m-%d')
+                account_type = row['account_type']
+ 
+                if account_type == "Chequingaccount":
+                    overdraft_limit = float (row['overdraft_limit'])
+                    overdraft_rate = float(row['overdraft_rate'])
+                    account = ChequingAccount(account_number, client_number, balance, date_created, overdraft_limit, overdraft_rate)
 
+                elif account_type == "Investmentaccount":
+                    management_Fee = float(row['management_fee'])
+                    account = InvestmentAccount(account_number, client_number, balance, date_created, management_Fee)
+ 
+                elif account_type == "SavingsAccount":
+                    interest_rate = float(row['interest_rate'])
+                    account = SavingsAccount(account_number, client_number, balance, date_created, interest_rate)
+ 
+                
+ 
+                else:
+                    logging.error(f"Not a valid account type.: {account_type}")
+                    continue
+               
+                if client_number in client_listing:
+                    accounts[account_number] = account
+                else:
+                    logging.error(f"Bank Account: {account_number} contains invalid client Number: {client_number}")
+ 
+            except Exception as e:
+                logging.error(f"Unable to create bank account from row : {e}")
     # RETURN STATEMENT
+    return client_listing, accounts 
+
     
 
 
