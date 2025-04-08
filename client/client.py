@@ -27,15 +27,15 @@ class Client:
 
         #if the first name is blank raise a ValueError
         if len(first_name.strip()) == 0:
-            self.__first_name = first_name
-        else:
             raise ValueError("The first name cannot be blank.")
+        else:
+            self.__first_name = first_name
 
         #if the last name is blank raise a ValueError
         if len(last_name.strip()) == 0:
-            self.__last_name = last_name
-        else:
             raise ValueError("The last name cannot be blank.")
+        else:
+            self.__last_name = last_name
         # if the email address is invalid raise a EmailNotValidError
         try:
             valid_email = validate_email(email_address)

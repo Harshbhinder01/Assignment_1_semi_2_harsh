@@ -89,7 +89,7 @@ def load_data()->tuple[dict,dict]:
                 account_number = int(row['account_number'])
                 client_number = int(row['client_number'])
                 balance = float(row['balance'])
-                date_created = datetime.strptime(row['date_created'])
+                date_created = datetime.strptime(row['date_created'], '%Y-%m-%d')
                 """
                 this will extract the data from file into variables and
                 converting to data type.
@@ -169,7 +169,7 @@ def update_data(updated_account: BankAccount) -> None:
  
 # GIVEN TESTING SECTION:
 if __name__ == "__main__":
-    clients,accounts = load_data()
+    clients, accounts = load_data()
    
    
     print("=========================================")

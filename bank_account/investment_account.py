@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 from bank_account.bank_account import BankAccount
 
 class InvestmentAccount(BankAccount):
@@ -37,7 +37,7 @@ class InvestmentAccount(BankAccount):
         
         main_str = super().__str__()
        
-        if self._BankAccount__date_created <= self.TEN_YEARS_AGO:
+        if self._BankAccount__date_created >= self.TEN_YEARS_AGO:
             management_fee = "Waived"
         else:
             management_fee =  f"${self.__managment_fee:.2f}"

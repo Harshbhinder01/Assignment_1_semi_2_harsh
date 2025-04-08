@@ -10,6 +10,7 @@ from user_interface.manage_data import load_data
 from user_interface.manage_data import update_data
 from bank_account.bank_account import BankAccount
 from PySide6.QtCore import Slot
+from datetime import datetime
 
 class ClientLookupWindow(LookupWindow):
     def __init__(self):
@@ -20,7 +21,7 @@ class ClientLookupWindow(LookupWindow):
         #establishing connnections
         self.lookup_button.clicked.connect(self.on_lookup_client)
         self.client_number_edit.textChanged.connect(self.on_text_changed)
-        #self.account_table.cellClicked.connect(self.on_select_account)
+        self.account_table.cellClicked.connect(self.on_select_account)
    
     @Slot()  
     def on_lookup_client(self):
@@ -67,7 +68,7 @@ class ClientLookupWindow(LookupWindow):
                 # adding items to the table
                 self.account_table.setItem(account_count, 0, account_number_item)
                 self.account_table.setItem(account_count, 1, balance_item)
-                self.account_table.setItem(account_count, 2, date_created_item)
+                self.account_table.setItem(account_count, 2, date_created_item.strftime('%Y-%m-%d'))
                 self.account_table.setItem(account_count, 3, account_type)              
            
                 account_count += 1
